@@ -181,7 +181,6 @@ p2v = Point2Voxel(
     unit_voxel_extent=[0.03,0.03,0.03],   # area of each voxel grid: 0.03*0.03*0.03
 )                                         # area of the whole voxel: 1.92*1.92*1.92
                                           # valid point coordinates: x,y,z in [-0.96, 0.96]
-
 p = p.reshape(B*N, 3)
 f = f.reshape(B*N, C)
 ids = ids.reshape(B*N)
@@ -190,7 +189,7 @@ valid_p, sparse_tensor, valid_ids, _ = p2v(p,f,ids)   # valid_p: M*3(M<=B*N), po
                                                       # valid_ids: M
 
 # Voxel2Point
-v2p = Voxel2Point(unit_voxel_extent=[0.03,0.03,0.03]) # or v2p = Voxel2Point(voxel_extent=[1.92,1.92,1.92])
+v2p = Voxel2Point(unit_voxel_extent=[0.03,0.03,0.03]) # or v2p=Voxel2Point(voxel_extent=[1.92,1.92,1.92])
 valid_f = v2p(sparse_tensor, valid_p, valid_ids)      # valid_f: M*C
 ```
 
