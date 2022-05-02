@@ -64,7 +64,7 @@ YOUR_DATA_ROOT
         └── real_test
 ```
 
-Revise the paprameter `DATA_DIR` in `data_processing.py`, e.g., `DATA_DIR=/YOUR_DATA_ROOT/data`, and run the following scripts to prepare training instances:
+Revise the paprameter `DATA_DIR` in `data_processing.py`, e.g., `DATA_DIR=/YOUR_DATA_ROOT/data`, and run the following scripts to prepare the dataset:
 
 ```
 python data_processing.py
