@@ -92,6 +92,48 @@ class Plain12(_basic_backbone):
         )
 
 
+class Plain24Lite(_basic_backbone):
+    def __init__(self, irrep_in=(4,),
+        dropout_p=0.015,
+        use_bn=True,
+        pool_type='avg'):
+        super(Plain24Lite, self).__init__(
+            irreps=[irrep_in] + [ # input
+                (2,  2,  2,  2),  # 32  1
+                (2,  2,  2,  2),  # 32  2
+                (2,  2,  2,  2),  # 32  3
+                (4,  4,  4,  4),  # 64 4
+                (4,  4,  4,  4),  # 64 5
+                (4,  4,  4,  4),  # 64 6
+
+                (4,  4,  4,  4),  # 64 7
+                (4,  4,  4,  4),  # 64 8
+                (4,  4,  4,  4),  # 64 9
+                (4,  4,  4,  4),  # 64 10
+                (4,  4,  4,  4),  # 64 11
+                (4,  4,  4,  4),  # 64 12
+
+                (4,  4,  4,  4),  # 64 13
+                (4,  4,  4,  4),  # 64 14
+                (4,  4,  4,  4),  # 64 15
+                (8,  8,  8,  8),  # 128 16
+                (8,  8,  8,  8),  # 128 17
+                (8,  8,  8,  8),  # 128 18
+
+                (8,  8,  8,  8),  # 128 19
+                (8,  8,  8,  8),  # 128 20
+                (8,  8,  8,  8),  # 128 21
+                (8,  8,  8,  8),  # 128 22
+                (8,  8,  8,  8),  # 128 23
+                (8,  8,  8,  8),  # 128 24
+            ],
+            strided_layers=[6,12,18],
+            dropout_p=dropout_p,
+            use_bn=use_bn,
+            pool_type=pool_type
+        )
+
+
 class Plain24(_basic_backbone):
     def __init__(self, irrep_in=(4,),
         dropout_p=0.015,
@@ -132,6 +174,7 @@ class Plain24(_basic_backbone):
             use_bn=use_bn,
             pool_type=pool_type
         )
+
 
 if __name__ == "__main__":
     from ss_conv.sp_ops.voxelize import Point2Voxel

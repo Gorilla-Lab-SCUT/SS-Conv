@@ -1,0 +1,61 @@
+NAME_PROJECT: REAL275
+
+rd_seed: 1
+log_dir: 'log'
+
+model:
+  voxel_num_limit: [64,64,64]
+  unit_voxel_extent: [0.015, 0.015, 0.015]
+  voxelization_mode: 4
+
+  dropout_p: 0.015
+  use_bn: True
+  pool_type: avg
+
+train:
+  optimizer:
+    name : Adam
+    lr   : 0.01
+    betas: [0.5, 0.999]
+    eps  : 0.000001
+
+  lr_scheduler:
+    name: StepLR
+    step_size: 2
+    gamma: 0.5
+
+  dataset:
+    name: real275
+    npoint: 1024
+    num_batch_per_epoch: 5000
+    filling_miss: True
+
+  dataloader:
+    bs: 64
+    num_workers: 32
+    shuffle: True
+    drop_last: True
+    pin_memory: False
+  
+  loss:
+    rotation_weight: 1.0
+    trans_weight: 1.0
+    size_weight: 1.0
+    nocs_weight: 1.0
+
+  max_epoch: 20
+  iterations_to_write: 50
+  epochs_to_save: 2
+
+test:
+  dataset:
+    name: real275
+    npoint: 1024
+    filling_miss: True
+
+  dataloader:
+    bs: 1
+    num_workers: 8
+    shuffle: False
+    drop_last: False
+    pin_memory: False 

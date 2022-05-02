@@ -5,7 +5,6 @@
 # Written by Jiehong Lin
 # --------------------------------------------------------
 from functools import partial
-from logging.config import valid_ident
 
 import torch
 import torch.nn as nn
@@ -165,7 +164,7 @@ class Feature_Steering_Module(nn.Module):
         Param ids: N
         Param r: B*3*3, rotation
         Param t: B*3, translation
-        Param s: B*3, scale
+        Param s: B or B*1 or B*3, scale
         return valid_points: M*3 (M<N)
         return valid_feats: sparse tensor 
         return valid_ids: M (M<N)
@@ -182,7 +181,7 @@ class Feature_Steering_Module(nn.Module):
         r = r[ids,:,:].contiguous().detach()
         t = t[ids, :].contiguous().detach()
         if s is not None:
-            s = s[ids, :].contiguous().detach()
+            s = s[ids].contiguous().detach()
 
         # tranform points
         new_points = self._transform_points(points,r,t,s)
@@ -201,6 +200,11 @@ class Feature_Steering_Module(nn.Module):
     def _transform_points(self, p, r, t, s=None):
         new_p = (p - t).unsqueeze(1) @ r
         if s is not None:
+            if len(s.size()) == 1:
+                s = s.unsqueeze(1)
+            elif len(s.size()) == 2:
+                if s.size(1) != 1:
+                    s = torch.norm(s,dim=1,keepdim=True)
             new_p = new_p.squeeze(1) / (s+1e-8)
         return new_p
 

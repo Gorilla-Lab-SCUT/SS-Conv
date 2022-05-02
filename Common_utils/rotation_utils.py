@@ -15,12 +15,12 @@ dir_path = os.path.dirname(os.path.abspath(__file__))
 _Jd = torch.load(os.path.join(dir_path, 'new_constants.pt'))
 
 def normalize_vector( v, dim =1, return_mag =False):
-    # v_mag = torch.sqrt(v.pow(2).sum(dim=dim, keepdim=True))# batch
-    # v_mag = torch.max(v_mag, torch.autograd.Variable(torch.FloatTensor([1e-8]).cuda()))
-    # v_mag = v_mag.expand_as(v)
-    # v = v/v_mag
-    # return v
-    return v/(torch.norm(v, dim=dim, keepdim=True)+1e-8)
+    v_mag = torch.sqrt(v.pow(2).sum(dim=dim, keepdim=True))# batch
+    v_mag = torch.max(v_mag, torch.autograd.Variable(torch.FloatTensor([1e-8]).cuda()))
+    v_mag = v_mag.expand_as(v)
+    v = v/v_mag
+    return v
+    # return v/(torch.norm(v, dim=dim, keepdim=True)+1e-8)
 
 # u, v batch*n
 def cross_product(u, v):
